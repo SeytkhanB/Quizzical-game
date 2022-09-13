@@ -6,17 +6,11 @@ import  {decode}  from "he"
 import Load from '../assets/load.gif'
 import axios from 'axios'
 
-import QuestionAndAnswer from './QuestionAndAnswer'
-
 
 export default function QuestionPage(props){
     const [triviaData, setTriviaData] = useState([])
     const [loadState, setLoadState] = useState(true)
     const [gameData, setGameData] = useState({tally:0, checked:false})
-
-    const [translatedQuestionsState, setTranslatedQuestionsState] = useState([])
-    const [translatedAnswersState, setTranslatedAnswersState] = useState([])
-    const [exampleState, setExampleState] = useState(false)
 
 
     const url = `https://opentdb.com/api.php?amount=${props.numPickerState}&difficulty=${props.difficultyState}`
@@ -76,53 +70,6 @@ export default function QuestionPage(props){
     }, [])
 
 
-
-    function translate() {
-
-        const q = triviaData.map(item => {
-            return item.question
-        })
-        const qV = q.join('')
-
-        let qData = {
-            q: qV,
-            source: 'en',
-            target: 'ru'
-        }
-        axios.post('https://libretranslate.de/translate', qData)
-            .then(res => {
-                const str = res.data.translatedText
-                const arr = str.split(/[\$?|\$.]/) // to split by "?" or "."
-                const newArr = arr.map(item => item.trim())
-                setTranslatedQuestionsState(newArr)
-            })
-
-// *********************************************************************************
-        
-        const a = triviaData.map(item => (
-            item.options.map(item => item.value)
-        ))
-        const aV = a.join('.') // to separate with special value. You know I am so genius
-
-        let aData = {
-            q: aV,
-            source: 'en',
-            target: 'ru'
-        }
-        axios.post('https://libretranslate.de/translate', aData)
-            .then(res => {
-                const str = res.data.translatedText
-                const arr = str.split(/[\$.]/)
-                const newArr = arr.map(item => item.trim())
-                setTranslatedAnswersState(newArr)
-            })
-
-
-        setExampleState(true)
-    }
-
-
-
     function toggleOption(oId, qId){
         setTriviaData(prevTriviaData => {
             return prevTriviaData.map(trivia=>{
@@ -180,15 +127,6 @@ export default function QuestionPage(props){
         />
     ))
 
-
-    const translatedQsAndAs = translatedQuestionsState.map(item => {
-        return <QuestionAndAnswer 
-            key={item}
-            item={item}
-            translatedAnswersState={translatedAnswersState}
-        />
-    })
-
     return (
         <div 
             className='question-page'
@@ -201,15 +139,8 @@ export default function QuestionPage(props){
                 </div> :
 
                 <div>
-
-                    <button onClick={translate}>Translate</button>
-
                     <div>
-                        {
-                            !exampleState ?
-                            questions : 
-                            translatedQsAndAs
-                        }
+                        {questions}
                     </div>
                     <div>
                         {(triviaData.length > 0 &&!gameData.checked) && 
