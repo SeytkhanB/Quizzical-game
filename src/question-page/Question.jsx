@@ -1,10 +1,12 @@
+
 import React from "react"
 import Option from "./Option"
 
 export default function Question(props){
 
     const options = props.options.map((option) => {
-        return <Option 
+        return <Option
+            theme={props.theme}
             key={option.id}
             qId={props.id}
             checked={props.checked}
@@ -14,8 +16,10 @@ export default function Question(props){
     })
 
     return (
-        <div className="question-container">
-            <h2>{props.question}</h2>
+        <div className='question-container'>
+            <h2 style={{color: props.theme ? 'white' : ''}}>
+                {props.question}
+            </h2>
             <div className="options">
                 {options}
             </div>
