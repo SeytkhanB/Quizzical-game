@@ -1,10 +1,10 @@
 
 import quizIcon from './assets/quiz.png'
 import CategoriesIcon from './assets/categories.png'
-import AmoutOfQuestions from './assets/question-mark.png'
+import AmountOfQuestions from './assets/question-mark.png'
 
 export default function Header(props) {
-  
+
   const diff = props.difficultyState
   
   let iconOfDifficulty = ''
@@ -30,12 +30,13 @@ export default function Header(props) {
             </p>
 
             <p className='amount-of-questions'>
-              <img width='10px' src={AmoutOfQuestions} alt="" /> {props.numPickerState}
+              <img width='10px' src={AmountOfQuestions} alt="" /> {props.numPickerState}
             </p>
           </div>
         </div>
 
         <div className="toggler">
+
           <p className="toggler--light">Light</p>
           <div 
             className="toggler--slider"

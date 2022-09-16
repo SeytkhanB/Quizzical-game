@@ -28,6 +28,10 @@ main.dark {
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
 }
+.btn-link {
+  text-decoration: none;
+  font-size: .8rem;
+}
 .btn:focus {
   outline: none;
 }
@@ -164,15 +168,6 @@ nav.dark {
   color: #293264;
   font-size: 14px;
 }
-
-/* .header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 7px;
-  padding: 15px 30px;
-  color: #4D5B9E;
-} */
 
 .toggler {
   display: flex;

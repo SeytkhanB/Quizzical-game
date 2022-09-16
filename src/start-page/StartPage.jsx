@@ -1,6 +1,7 @@
 
 import PlusIcon from '../assets/plus.png'
 import MinusIcon from '../assets/minus.png'
+import {Link} from 'react-router-dom'
 
 export default function StartPage(props) {
 
@@ -22,8 +23,6 @@ export default function StartPage(props) {
           />
         </div>
 
-
-
         <label className="difficulties" htmlFor="favColor">Change difficulties</label>
         <br />
         <select 
@@ -36,7 +35,12 @@ export default function StartPage(props) {
             <option value="hard">Hard</option>
         </select>
 
-        <button className='btn' onClick={props.play}>Start quiz</button>
+        <Link 
+          to='/question-page' 
+          className='btn btn-link'
+        >
+          Start quiz
+        </Link>
     </div>
   )
 }

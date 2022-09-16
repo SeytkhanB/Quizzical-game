@@ -5,12 +5,37 @@ import  {nanoid}  from "nanoid"
 import  {decode}  from "he"
 import Load from '../assets/load.gif'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
 
 export default function QuestionPage(props){
     const [triviaData, setTriviaData] = useState([])
     const [loadState, setLoadState] = useState(true)
     const [gameData, setGameData] = useState({tally:0, checked:false})
+
+    const [time, setTime] = useState(0)
+
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        let interval = setInterval(() => {
+            setTime(prevTime => prevTime + 1)
+        }, 1000)
+
+        if (gameData.checked) {
+            clearInterval(interval)
+            console.log('checked is true')
+        }
+
+        return () => {
+            clearInterval(interval)
+        }
+    }, [time])
+
+    function toStartPage() {
+        navigate('/')
+    }
 
 
     const url = `https://opentdb.com/api.php?amount=${props.numPickerState}&difficulty=${props.difficultyState}`
@@ -139,17 +164,31 @@ export default function QuestionPage(props){
                 </div> :
 
                 <div>
+                    {<h3>This is time: {time}</h3>}
+
                     <div>
                         {questions}
                     </div>
                     <div>
                         {(triviaData.length > 0 &&!gameData.checked) && 
-                            <button className="btn" onClick={checkAnswers}>Check answers</button>
+                            <button 
+                                className="btn" 
+                                onClick={() => {
+                                    checkAnswers()
+                                }}
+                            >
+                                Check answers
+                            </button>
                         }
                         {gameData.checked && 
                             <div>
                                 <span>You scored {gameData.tally}/{triviaData.length} correct answers</span>
-                                <button className="btn btn-game" onClick={props.play}>Play again</button>
+                                <button 
+                                    className="btn btn-game" 
+                                    onClick={toStartPage}
+                                >
+                                    Play again
+                                </button>
                             </div>
                         }
                     </div>
