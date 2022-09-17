@@ -7,7 +7,6 @@ import {Routes, Route} from 'react-router-dom'
 
 import useAppLogic from './hooks/useAppLogic'
 
-
 export default function App() {
   const {
     themeState,

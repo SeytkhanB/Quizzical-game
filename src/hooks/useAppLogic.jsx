@@ -6,6 +6,12 @@ export default function useAppLogic() {
   const [difficultyState, setDifficultyState] = useState('easy')
   const [numPickerState, setNumPickerState] = useState(5)
 
+  const [historyOpenState, setHistoryOpenState] = useState(false)
+
+  function openHistoryPage() {
+    setHistoryOpenState(prevState => !prevState)
+  }
+
   function toggleTheme() {
     setThemeState(prevState => !prevState)
   }
@@ -36,10 +42,12 @@ export default function useAppLogic() {
     themeState,
     difficultyState,
     numPickerState,
-    
+
     toggleTheme,
     handleChange,
     increment,
-    decrement
+    decrement,
+    historyOpenState,
+    openHistoryPage
   }
 }

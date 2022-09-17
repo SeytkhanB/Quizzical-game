@@ -5,17 +5,23 @@
   padding: 0;
 }
 
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  background-color: #F5F7FB;
+  font-family: 'Roboto', sans-serif;
+}
+html {
+  height: -webkit-fill-available;
+}
+
 *:focus {
   outline: none;
 }
 
-body {
-  background-color: #F5F7FB;
-  font-family: 'Roboto', sans-serif;
-}
-
 main.dark {
   background-color: #282D35;
+  color: white;
 }
 
 .btn {
@@ -84,7 +90,9 @@ main.dark {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  filter: invert(100%)
+  background-color: white;
+  border-radius: 5px;
+  padding: .5px;
 }
 
 .difficulties {
@@ -107,6 +115,7 @@ main.dark {
 /* Question page */
 .question-page {
   padding: 10% 7% 2% 7%;
+  min-height: 100vh;
 }
 
 .question-container > h2 {
@@ -230,5 +239,96 @@ nav.dark .toggler--slider {
 }
 
 .dark {
+  background-color: #282D35;
   color: white;
+}
+
+/* history */
+.history-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  transform: translate(-50%, 5%);
+  width: 100%;
+  height: 90vh;
+  overflow: auto;
+  background-color: #F5F7FB;
+  color: #293264;
+  padding: 10px;
+}
+.history-page > h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.history-icon {
+  width: 20px;
+  cursor: pointer;
+}
+.delete-all {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+ol {
+  list-style: none;
+}
+
+.questions-and-answers-conatainer {
+  border: 1px solid orange;
+  padding: 10px 20px;
+  margin: 10px 0;
+  width: 100%;
+  height: 350px;
+  overflow: auto;
+}
+.questions-and-answers-conatainer > h2 {
+  text-align: center;
+}
+
+.history-quiz-container {
+  margin-top: 25px;
+}
+
+.history-correct-answer {
+  color: orange;
+}
+
+/* timer */
+.timer-container {
+  display: flex;
+  align-items: center;
+  color: #4D5B9E;
+}
+
+
+
+/* media */
+@media screen and (max-width: 700px) {
+  .question-page {
+    padding: 18% 7% 2% 7%;
+  }
+
+  .option {
+    font-size: 12px;
+  }
+
+  .question-container > h2 {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .question-page {
+    padding: 25% 7% 2% 7%;
+  }
+
+  .option {
+    font-size: 10px;
+  }
+
+  .question-container > h2 {
+    font-size: 16px;
+  }
 }

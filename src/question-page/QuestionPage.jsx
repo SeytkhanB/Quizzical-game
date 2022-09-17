@@ -1,21 +1,40 @@
 
-import React, {useState, useEffect} from "react"
+import React, {useState, useContext, useEffect} from "react"
 import Question from "./Question"
 import  {nanoid}  from "nanoid"
 import  {decode}  from "he"
 import Load from '../assets/load.gif'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import timerIcon from '../assets/timer-icon.png'
+
+import {Context} from '../Context'
 
 
 export default function QuestionPage(props){
     const [triviaData, setTriviaData] = useState([])
     const [loadState, setLoadState] = useState(true)
     const [gameData, setGameData] = useState({tally:0, checked:false})
+    const [countQuiz, setCountQuiz] = useState(1)
 
     const [time, setTime] = useState(0)
+    const {
+        storeQuiz
+    } = useContext(Context)
 
     const navigate = useNavigate()
+
+    function storeQuizToState() {
+        setCountQuiz(prevState => {
+          if (prevState === prevState) {
+            // setTypedWordsState([])    // to remove all typed words for next attempt
+            return prevState + 1
+          }
+          return prevState
+        })
+    
+        return countQuiz
+    }
 
 
     useEffect(() => {
@@ -25,7 +44,20 @@ export default function QuestionPage(props){
 
         if (gameData.checked) {
             clearInterval(interval)
-            console.log('checked is true')
+            const questions = triviaData.map(question => question.question)
+            const correct = triviaData.map(correct => correct.correct)
+            const score = `${gameData.tally}/${triviaData.length}`
+            
+            storeQuiz({
+                id: nanoid(),
+                quiz: storeQuizToState(),
+                category: props.difficultyState,
+                amountOfQuestions: props.numPickerState,
+                questions: questions,
+                correctAnswers: correct,
+                score: score,
+                done: time
+            })
         }
 
         return () => {
@@ -154,7 +186,7 @@ export default function QuestionPage(props){
 
     return (
         <div 
-            className='question-page'
+            className={`question-page ${props.themeState ? 'dark' : ''}}`}
             style={{color: props.themeState ? 'white' : ''}}
         >
             {
@@ -164,7 +196,15 @@ export default function QuestionPage(props){
                 </div> :
 
                 <div>
-                    {<h3>This is time: {time}</h3>}
+                    <div className="timer-container">
+                        <img src={timerIcon} alt='Timer icon' />
+                        <h5 style={{
+                                color: props.themeState ? 'white' : ''
+                            }}
+                        >
+                            : {time}
+                        </h5>
+                    </div>
 
                     <div>
                         {questions}
@@ -173,9 +213,7 @@ export default function QuestionPage(props){
                         {(triviaData.length > 0 &&!gameData.checked) && 
                             <button 
                                 className="btn" 
-                                onClick={() => {
-                                    checkAnswers()
-                                }}
+                                onClick={checkAnswers}
                             >
                                 Check answers
                             </button>
