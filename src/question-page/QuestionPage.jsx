@@ -15,26 +15,14 @@ export default function QuestionPage(props){
     const [triviaData, setTriviaData] = useState([])
     const [loadState, setLoadState] = useState(true)
     const [gameData, setGameData] = useState({tally:0, checked:false})
-    const [countQuiz, setCountQuiz] = useState(1)
 
     const [time, setTime] = useState(0)
     const {
-        storeQuiz
+        storeQuiz,
+        storeQuizToState
     } = useContext(Context)
 
     const navigate = useNavigate()
-
-    function storeQuizToState() {
-        setCountQuiz(prevState => {
-          if (prevState === prevState) {
-            // setTypedWordsState([])    // to remove all typed words for next attempt
-            return prevState + 1
-          }
-          return prevState
-        })
-    
-        return countQuiz
-    }
 
 
     useEffect(() => {
